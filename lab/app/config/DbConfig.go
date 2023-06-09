@@ -38,8 +38,6 @@ func InitDb() {
 
 	db.Debug()
 
-	// err = db.AutoMigrate(models.UserModel{})
-	// db.Migrator().RenameColumn(models.UserModel{}, "ftest", "ftests")
 	err = migrations.Migrator(db)
 	if err != nil {
 		panic(err)
