@@ -1,0 +1,35 @@
+package Request
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+)
+
+func mains() {
+	http.HandleFunc("/", handleRequest)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+	// Menggunakan goroutine untuk menangani permintaan secara konkuren
+	go processRequest(w)
+
+	// Memberikan respons cepat kepada klien
+	fmt.Fprint(w, "Permintaan diterima")
+}
+
+func processRequest(w http.ResponseWriter) {
+	// Menunda eksekusi untuk simulasi pemrosesan yang membutuhkan waktu
+	// Di sini, Anda dapat menambahkan logika bisnis atau pemanggilan ke layanan lain
+	// yang akan memakan waktu lebih lama untuk diproses.
+	// Misalnya, panggil fungsi time-consumingFunction() di sini.
+
+	// Menambahkan penundaan selama 5 detik
+	// untuk mensimulasikan pemrosesan yang memakan waktu
+	time.Sleep(5 * time.Second)
+
+	// Mengirimkan respons setelah pemrosesan selesai
+	fmt.Fprint(w, "Proses selesai")
+}
